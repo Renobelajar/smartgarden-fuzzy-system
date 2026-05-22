@@ -27,7 +27,7 @@ suhu_tanah['Panas'] = fuzz.trimf(suhu_tanah.universe, [5, 10, 10])
 # --- Input 2: Suhu Udara Dalam ---
 kelembaban_tanah['Kering']  = fuzz.trimf(kelembaban_tanah.universe, [0, 0, 5])
 kelembaban_tanah['Sedang'] = fuzz.trimf(kelembaban_tanah.universe, [0, 3, 10]) 
-kelembaban_tanah['Panas'] = fuzz.trimf(kelembaban_tanah.universe, [5, 10, 10])
+kelembaban_tanah['Basah'] = fuzz.trimf(kelembaban_tanah.universe, [5, 10, 10])
 
 # --- Input 3: intensitas_cahaya Udara ---
 intensitas_cahaya['Redup'] = fuzz.trimf(intensitas_cahaya.universe, [0, 0, 5])
@@ -60,27 +60,27 @@ simulasi = ctrl.ControlSystemSimulation(sistem_kontrol)
 
 # 4. ANTARMUKA WEB STREAMLIT 
 # Judul Utama Aplikasi
-st.markdown("# **Sistem Kontrol Suhu Ruangan - Fuzzy Logic**")
-st.markdown("<p style='color: gray; font-size: 14px; margin-top: -15px;'>Tugas 4 - Sistem Pendukung Keputusan</p>", unsafe_allow_html=True)
+st.markdown("# **Sistem Smart Garden - Fuzzy Logic**")
+st.markdown("<p style='color: gray; font-size: 14px; margin-top: -15px;'> Sistem Pendukung Keputusan</p>", unsafe_allow_html=True)
 
 st.write("")
 
 # Sidebar Panel Masukan Nilai
 st.sidebar.markdown("### **Masukkan Nilai Input**\n### **(Skala 0-10)**")
-input_luar = st.sidebar.slider("Suhu Udara Luar", 0.0, 10.0, 6.0, 0.1)
-input_dalam = st.sidebar.slider("Suhu Udara Dalam", 0.0, 10.0, 5.0, 0.1)
+input_suhu_tanah = st.sidebar.slider("Suhu Udara Luar", 0.0, 10.0, 6.0, 0.1)
+input_kelembaban_tanah = st.sidebar.slider("Suhu Udara Dalam", 0.0, 10.0, 8.0, 0.1)
 input_intensitas_cahaya = st.sidebar.slider("intensitas_cahaya Udara", 0.0, 10.0, 7.0, 0.1)
 
 # Sinkronisasi nilai slider ke simulator fuzzy
-simulasi.input['suhu_tanah'] = input_luar
-simulasi.input['kelembaban_tanah'] = input_dalam
-simulasi.input['kelembaban'] = input_kelembaban
+simulasi.input['suhu_tanah'] = input_suhu_tanah
+simulasi.input['kelembaban_tanah'] = input_kelembaban_tanah
+simulasi.input['intensitas_cahaya'] = intensitas_cahaya
 
 # Hitung Defuzifikasi
 simulasi.compute()
 
-hasil_kipas = simulasi.output['katup_air']
-hasil_ac = simulasi.output['pompa_nutrisi']
+hasil_katup_air = simulasi.output['katup_air']
+hasil_pompa_nutrisi = simulasi.output['pompa_nutrisi']
 hasil_peneduh_elektrik = simulasi.output['peneduh_elektrik']
 
 # Bagian Cetak Teks Hasil Output Crisp 
@@ -88,15 +88,15 @@ st.markdown("### **Hasil Perhitungan Sistem (Output Crisp)**")
 col_txt1, col_txt2, col_txt3 = st.columns(3)
 
 with col_txt1:
-    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Kecepatan Kipas Angin</p>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_kipas:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Katup Air</p>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_katup_air:.2f}</h1>", unsafe_allow_html=True)
 
 with col_txt2:
-    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Pendingin Udara (AC)</p>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_ac:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Pompa Nutrisi (AC)</p>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh_elektrik:.2f}</h1>", unsafe_allow_html=True)
 
 with col_txt3:
-    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>peneduh_elektrik Ruangan</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Peneduh Elektrik Ruangan</p>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh_elektrik:.2f}</h1>", unsafe_allow_html=True)
 
 st.write("")
@@ -139,7 +139,7 @@ st.markdown("### **Canvas 2: Fungsi Keanggotaan Output**")
 col_out1, col_out2, col_out3 = st.columns(3)
 
 with col_out1:
-    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output Kipas (Hasil: {hasil_kipas:.1f})</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output Kipas (Hasil: {katup_air:.1f})</h4>", unsafe_allow_html=True)
     katup_air.view(sim=simulasi)
     fig_kipas = plt.gcf()
     plt.title("")
@@ -147,7 +147,7 @@ with col_out1:
     plt.close(fig_kipas)
 
 with col_out2:
-    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output AC (Hasil: {hasil_ac:.1f})</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output AC (Hasil: {pompa_nutrisi:.1f})</h4>", unsafe_allow_html=True)
     pompa_nutrisi.view(sim=simulasi)
     fig_ac = plt.gcf()
     plt.title("")
