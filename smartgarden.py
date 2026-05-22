@@ -19,7 +19,7 @@ peneduh_elektrik = ctrl.Consequent(np.arange(0, 51, 1), 'peneduh_elektrik')
 
 # 2. MEMBERSHIP FUNCTION 
 
-# --- Input 1: Suhu Udara Luar (Segitiga Lancip Ada Garis Puncaknya) ---
+# --- Input 1: Suhu Udara Luar ---
 suhu_tanah['Dingin'] = fuzz.trimf(suhu_tanah.universe, [0, 0, 5])
 suhu_tanah['Normal']  = fuzz.trimf(suhu_tanah.universe, [0, 4, 10]) 
 suhu_tanah['Panas'] = fuzz.trimf(suhu_tanah.universe, [5, 10, 10])
@@ -104,7 +104,7 @@ st.write("")
 
 # 5. CANVAS GRAFIK FUNGSI KEANGGOTAAN 
 
-# --- BARIS 1: INPUT ---
+# INPUT
 st.markdown("### **Canvas 1: Fungsi Keanggotaan Input**")
 col_in1, col_in2, col_in3 = st.columns(3)
 
@@ -134,7 +134,7 @@ with col_in3:
 
 st.write("")
 
-# --- BARIS 2: OUTPUT ---
+#  OUTPUT 
 st.markdown("### **Canvas 2: Fungsi Keanggotaan Output**")
 col_out1, col_out2, col_out3 = st.columns(3)
 
