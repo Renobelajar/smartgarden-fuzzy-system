@@ -67,21 +67,21 @@ st.write("")
 
 # Sidebar Panel Masukan Nilai
 st.sidebar.markdown("### **Masukkan Nilai Input**\n### **(Skala 0-10)**")
-input_suhu_tanah = st.sidebar.slider("Suhu Udara Luar", 0.0, 10.0, 6.0, 0.1)
-input_kelembaban_tanah = st.sidebar.slider("Suhu Udara Dalam", 0.0, 10.0, 8.0, 0.1)
-input_intensitas_cahaya = st.sidebar.slider("intensitas_cahaya Udara", 0.0, 10.0, 7.0, 0.1)
+input_suhu = st.sidebar.slider("Suhu Udara Luar", 0.0, 10.0, 6.0, 0.1)
+input_kelembaban = st.sidebar.slider("Suhu Udara Dalam", 0.0, 10.0, 8.0, 0.1)
+input_cahaya = st.sidebar.slider("intensitas_cahaya Udara", 0.0, 10.0, 7.0, 0.1)
 
 # Sinkronisasi nilai slider ke simulator fuzzy
-simulasi.input['suhu_tanah'] = input_suhu_tanah
-simulasi.input['kelembaban_tanah'] = input_kelembaban_tanah
-simulasi.input['intensitas_cahaya'] = intensitas_cahaya
+simulasi.input['suhu_tanah'] = input_suhu
+simulasi.input['kelembaban_tanah'] = input_kelembaban
+simulasi.input['intensitas_cahaya'] = input_cahaya
 
 # Hitung Defuzifikasi
 simulasi.compute()
 
-hasil_katup_air = simulasi.output['katup_air']
-hasil_pompa_nutrisi = simulasi.output['pompa_nutrisi']
-hasil_peneduh_elektrik = simulasi.output['peneduh_elektrik']
+hasil_katup = simulasi.output['katup_air']
+hasil_pompa = simulasi.output['pompa_nutrisi']
+hasil_peneduh = simulasi.output['peneduh_elektrik']
 
 # Bagian Cetak Teks Hasil Output Crisp 
 st.markdown("### **Hasil Perhitungan Sistem (Output Crisp)**")
@@ -89,15 +89,15 @@ col_txt1, col_txt2, col_txt3 = st.columns(3)
 
 with col_txt1:
     st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Katup Air</p>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_katup_air:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_katup:.2f}</h1>", unsafe_allow_html=True)
 
 with col_txt2:
     st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Pompa Nutrisi (AC)</p>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh_elektrik:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh:.2f}</h1>", unsafe_allow_html=True)
 
 with col_txt3:
     st.markdown("<p style='font-size: 13px; color: gray; margin-bottom: -5px;'>Peneduh Elektrik Ruangan</p>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh_elektrik:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='font-size: 42px; font-weight: bold; margin-top: -5px;'>{hasil_peneduh:.2f}</h1>", unsafe_allow_html=True)
 
 st.write("")
 st.write("")
@@ -111,26 +111,26 @@ col_in1, col_in2, col_in3 = st.columns(3)
 with col_in1:
     st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Suhu Udara Luar</h4>", unsafe_allow_html=True)
     suhu_tanah.view(sim=simulasi)
-    fig_luar = plt.gcf()
+    fig_suhu = plt.gcf()
     plt.title("") 
-    st.pyplot(fig_luar)
-    plt.close(fig_luar)
+    st.pyplot(fig_suhu)
+    plt.close(fig_suhu)
 
 with col_in2:
     st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Suhu Udara Dalam</h4>", unsafe_allow_html=True)
     kelembaban_tanah.view(sim=simulasi)
-    fig_dalam = plt.gcf()
+    fig_kelembaban = plt.gcf()
     plt.title("")
-    st.pyplot(fig_dalam)
-    plt.close(fig_dalam)
+    st.pyplot(fig_kelembaban)
+    plt.close(fig_kelembaban)
 
 with col_in3:
     st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>intensitas_cahaya Udara</h4>", unsafe_allow_html=True)
     intensitas_cahaya.view(sim=simulasi)
-    fig_intensitas_cahaya = plt.gcf()
+    fig_cahaya = plt.gcf()
     plt.title("")
-    st.pyplot(fig_intensitas_cahaya)
-    plt.close(fig_intensitas_cahaya)
+    st.pyplot(fig_cahaya)
+    plt.close(fig_cahaya)
 
 st.write("")
 
@@ -141,7 +141,7 @@ col_out1, col_out2, col_out3 = st.columns(3)
 with col_out1:
     st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output Kipas (Hasil: {katup_air:.1f})</h4>", unsafe_allow_html=True)
     katup_air.view(sim=simulasi)
-    fig_kipas = plt.gcf()
+    fig_katup = plt.gcf()
     plt.title("")
     st.pyplot(fig_kipas)
     plt.close(fig_kipas)
@@ -149,15 +149,15 @@ with col_out1:
 with col_out2:
     st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output AC (Hasil: {pompa_nutrisi:.1f})</h4>", unsafe_allow_html=True)
     pompa_nutrisi.view(sim=simulasi)
-    fig_ac = plt.gcf()
+    fig_pompa = plt.gcf()
     plt.title("")
-    st.pyplot(fig_ac)
-    plt.close(fig_ac)
+    st.pyplot(fig_pompa)
+    plt.close(fig_pompa)
 
 with col_out3:
     st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output peneduh_elektrik (Hasil: {hasil_peneduh_elektrik:.1f})</h4>", unsafe_allow_html=True)
     peneduh_elektrik.view(sim=simulasi)
-    fig_peneduh_elektrik = plt.gcf()
+    fig_peneduh = plt.gcf()
     plt.title("")
-    st.pyplot(fig_peneduh_elektrik)
-    plt.close(fig_peneduh_elektrik)
+    st.pyplot(fig_peneduh)
+    plt.close(fig_peneduh)
