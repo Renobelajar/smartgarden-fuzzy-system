@@ -109,7 +109,7 @@ st.markdown("### **Canvas 1: Fungsi Keanggotaan Input**")
 col_in1, col_in2, col_in3 = st.columns(3)
 
 with col_in1:
-    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Suhu Udara Luar</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Suhu Tanah</h4>", unsafe_allow_html=True)
     suhu_tanah.view(sim=simulasi)
     fig_suhu = plt.gcf()
     plt.title("") 
@@ -117,7 +117,7 @@ with col_in1:
     plt.close(fig_suhu)
 
 with col_in2:
-    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Suhu Udara Dalam</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>Kelembaban Tanah</h4>", unsafe_allow_html=True)
     kelembaban_tanah.view(sim=simulasi)
     fig_kelembaban = plt.gcf()
     plt.title("")
@@ -125,7 +125,7 @@ with col_in2:
     plt.close(fig_kelembaban)
 
 with col_in3:
-    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>intensitas_cahaya Udara</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; margin-bottom: -10px;'>IntensitasCahaya</h4>", unsafe_allow_html=True)
     intensitas_cahaya.view(sim=simulasi)
     fig_cahaya = plt.gcf()
     plt.title("")
@@ -139,15 +139,15 @@ st.markdown("### **Canvas 2: Fungsi Keanggotaan Output**")
 col_out1, col_out2, col_out3 = st.columns(3)
 
 with col_out1:
-    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output Kipas (Hasil: {katup_air:.1f})</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output Kipas (Hasil: {hasil_katup:.1f})</h4>", unsafe_allow_html=True)
     katup_air.view(sim=simulasi)
     fig_katup = plt.gcf()
     plt.title("")
-    st.pyplot(fig_kipas)
-    plt.close(fig_kipas)
+    st.pyplot(fig_katup)
+    plt.close(fig_katup)
 
 with col_out2:
-    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output AC (Hasil: {pompa_nutrisi:.1f})</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output AC (Hasil: {hasil_pompa:.1f})</h4>", unsafe_allow_html=True)
     pompa_nutrisi.view(sim=simulasi)
     fig_pompa = plt.gcf()
     plt.title("")
@@ -155,7 +155,7 @@ with col_out2:
     plt.close(fig_pompa)
 
 with col_out3:
-    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output peneduh_elektrik (Hasil: {hasil_peneduh_elektrik:.1f})</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center; margin-bottom: -10px;'>Output peneduh_elektrik (Hasil: {hasil_peneduh:.1f})</h4>", unsafe_allow_html=True)
     peneduh_elektrik.view(sim=simulasi)
     fig_peneduh = plt.gcf()
     plt.title("")
